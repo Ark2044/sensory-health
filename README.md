@@ -66,13 +66,13 @@ This will start the Flask app locally on port 5000. You can access the app at ht
 1. Build the Docker image:
 
 ```bash
-docker build -t flask-disease-detection .
+docker build -t sensory-health .
 ```
 
 2. Run the Docker container:
 
 ```bash
-docker run -p 5000:5000 flask-disease-detection
+docker run -p 5000:5000 sensory-health
 ```
 
 This will map port 5000 on your host machine to port 5000 inside the container. You can access the app at http://localhost:5000.
@@ -82,7 +82,7 @@ This will map port 5000 on your host machine to port 5000 inside the container. 
 You can also specify a custom port to run the Flask app. For example:
 
 ```bash
-docker run -e PORT=8080 -p 8080:8080 flask-disease-detection
+docker run -e PORT=8080 -p 8080:8080 sensory-health
 ```
 
 This will run the app on port 8080.
@@ -113,7 +113,7 @@ To deploy the Flask app to a cloud provider or server:
 ## Folder Structure
 
 ```plaintext
-disease-detection-app/
+sensory-health/
 │
 ├── app.py                # Flask application
 ├── Dockerfile            # Docker configuration
@@ -131,7 +131,3 @@ disease-detection-app/
 ├── SKIN.h5               # Skin disease detection model
 └── NOSE.h5               # Nose disease detection model
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
