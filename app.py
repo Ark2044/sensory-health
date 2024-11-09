@@ -4,6 +4,7 @@ import cv2
 import tensorflow as tf
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from huggingface_hub import hf_hub_download
 
 app = Flask(__name__)
 
@@ -16,6 +17,14 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Ensure upload directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def load_model_from_hf(model_repo_id, model_filename):
+    try:
+        model_path = hf_hub_download(repo_id=model_repo_id, filename=model_filename)
+        return tf.keras.models.load_model(model_path)
+    except Exception as e:
+        print(f"Error loading model from Hugging Face: {e}")
+        return None
 
 # Load individual models for each sensory organ
 def load_eye_model():
@@ -47,7 +56,10 @@ def load_nose_model():
         return None
 
 # Load models
-EYE_MODEL = load_eye_model()
+EYE_MODEL = load_model_from_hf("Ark2044/eye", "EYE.h5")
+# EAR_MODEL = load_model_from_hf("your_username/ear-disease-detection", "EAR.h5")
+# SKIN_MODEL = load_model_from_hf("your_username/skin-disease-detection", "SKIN.h5")
+# NOSE_MODEL = load_model_from_hf("your_username/nose-disease-detection", "NOSE.h5")
 EAR_MODEL = load_ear_model()
 SKIN_MODEL = load_skin_model()
 NOSE_MODEL = load_nose_model()
